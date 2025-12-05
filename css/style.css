@@ -500,6 +500,8 @@ body{
 .snake-box.is-open .snake-desc {
     max-height: 900px;
     -webkit-line-clamp: unset;
+    display: block;
+    overflow: visible;
 }
 
 .snake-box.is-open .snake-ellipsis {

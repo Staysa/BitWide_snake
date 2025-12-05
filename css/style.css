@@ -442,18 +442,78 @@ body{
 }
 
 /*.badge{display:inline-grid;place-items:center;width:32px;height:32px;background:var(--primary);color:#fff;border-radius:999px;font-weight:800}*/
-.badge {display: none}
-.snake-box{position:absolute;border-radius:12px; padding:14px}
-.snake-toggle{all:unset;display:block;cursor:pointer}
-.snake-desc{position:relative;overflow:hidden;max-height:50px;transition:max-height .3s ease;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.snake-ellipsis{position:absolute;right:8px;bottom:-8px;font-weight:800;font-size:26px;line-height:1;background:transparent;border:0;color:var(--text);cursor:pointer}
-.snake-actions{margin-top:10px}
-.snake-box:not(.is-open) .snake-desc{cursor:pointer}
-.snake-box.is-open{background:rgba(255,255,255,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:var(--shadow);padding:14px}
-.snake-box.is-open .snake-desc{max-height:9999px;-webkit-line-clamp:unset}
-.snake-box.is-open .snake-ellipsis{display:none}
-.snake-desc__inner p{font-size:1.2em; margin:0}
-.snake-box.is-open .snake-toggle .h3{margin-bottom:10px}
+.badge {
+    display: none;
+}
+
+.snake-box {
+    position: absolute;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.snake-toggle {
+    all: unset;
+    display: block;
+    cursor: pointer;
+}
+
+.snake-desc {
+    position: relative;
+    overflow: hidden;
+    max-height: 50px;
+    transition: max-height 0.35s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.snake-ellipsis {
+    position: absolute;
+    right: 8px;
+    bottom: -8px;
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 1;
+    background: transparent;
+    border: 0;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.snake-actions {
+    margin-top: 10px;
+}
+
+.snake-box:not(.is-open) .snake-desc {
+    cursor: pointer;
+}
+
+.snake-box.is-open {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+    padding: 14px;
+}
+
+.snake-box.is-open .snake-desc {
+    max-height: 900px;
+    -webkit-line-clamp: unset;
+}
+
+.snake-box.is-open .snake-ellipsis {
+    display: none;
+}
+
+.snake-desc__inner p {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.snake-box.is-open .snake-toggle .h3 {
+    margin-bottom: 10px;
+}
 
 /* Why */
 .why {

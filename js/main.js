@@ -98,73 +98,28 @@
     const root = document.getElementById('snakeSteps');
     if (!root) return;
 
-    function expand(descEl, boxEl) {
-        const inner = descEl.querySelector('.snake-desc__inner');
-        if (!inner) return;
-
-        boxEl.classList.add('is-open');
-        descEl.style.maxHeight = '50px';
-
-        requestAnimationFrame(() => {
-            descEl.style.maxHeight = (inner.scrollHeight + 2) + 'px';
-        });
-    }
-
-    function collapse(descEl, boxEl) {
-        const h = descEl.scrollHeight;
-        descEl.style.maxHeight = h + 'px';
-
-        requestAnimationFrame(() => {
-            descEl.style.maxHeight = '50px';
-        });
-
-        const done = () => boxEl.classList.remove('is-open');
-        descEl.addEventListener('transitionend', done, { once: true });
-        setTimeout(done, 400);
-    }
-
     function handlePointerUp(e) {
         const target = e.target;
 
-        // do not toggle when clicking on mini buttons
         if (target.closest('.btn-mini')) return;
 
         const box = target.closest('.snake-box');
         if (!box) return;
 
-        const desc = box.querySelector('.snake-desc');
-        if (!desc) return;
-
         const isOpen = box.classList.contains('is-open');
 
         if (isOpen) {
-            // collapse on any tap inside box
-            collapse(desc, box);
+            box.classList.remove('is-open');
+            e.preventDefault();
             return;
         }
 
-        // expand only when tap is on title / text / ellipsis
         const canExpand = target.closest('.snake-toggle, .snake-desc, .snake-ellipsis');
-        if (canExpand) {
-            expand(desc, box);
-        }
+        if (!canExpand) return;
 
-        // prevent second synthetic click after pointerup on mobile
+        box.classList.add('is-open');
         e.preventDefault();
     }
 
     root.addEventListener('pointerup', handlePointerUp);
-
-    let rAF;
-    window.addEventListener('resize', () => {
-        cancelAnimationFrame(rAF);
-        rAF = requestAnimationFrame(() => {
-            root.querySelectorAll('.snake-box.is-open .snake-desc').forEach(desc => {
-                const inner = desc.querySelector('.snake-desc__inner');
-                if (inner) {
-                    desc.style.maxHeight = (inner.scrollHeight + 2) + 'px';
-                }
-            });
-        });
-    });
 })();

@@ -98,7 +98,7 @@
     const root = document.getElementById('snakeSteps');
     if (!root) return;
 
-    function handlePointerUp(e) {
+    function onClick(e) {
         const target = e.target;
 
         if (target.closest('.btn-mini')) return;
@@ -106,11 +106,14 @@
         const box = target.closest('.snake-box');
         if (!box) return;
 
+        const desc = box.querySelector('.snake-desc');
+        if (!desc) return;
+
         const isOpen = box.classList.contains('is-open');
 
         if (isOpen) {
             box.classList.remove('is-open');
-            e.preventDefault();
+            desc.style.maxHeight = "";   // clear inline if it was set before
             return;
         }
 
@@ -118,8 +121,8 @@
         if (!canExpand) return;
 
         box.classList.add('is-open');
-        e.preventDefault();
+        desc.style.maxHeight = "";       // rely on CSS .snake-box.is-open .snake-desc
     }
 
-    root.addEventListener('pointerup', handlePointerUp);
+    root.addEventListener('click', onClick);
 })();

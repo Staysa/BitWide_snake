@@ -38,23 +38,60 @@
     const statusEl = document.getElementById('formStatus');
     if(!modal) return;
 
-    const openModal = () => { modal.classList.add('is-open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; };
-    const closeModal = () => { modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; };
+    const openModal = () => {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden','true');
+        document.body.style.overflow='';
+    };
 
     openers.forEach(b => b.addEventListener('click', openModal));
+
     modal.addEventListener('click', (e)=>{
         if (e.target.matches('[data-close-modal], .modal__backdrop, .modal__close')) closeModal();
     });
-    document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeModal(); });
 
+    document.addEventListener('keydown', (e)=>{
+        if (e.key === 'Escape') closeModal();
+    });
+
+    // --- Form submit handler ---
     if (form){
-        form.addEventListener('submit', (e)=>{
+        form.addEventListener('submit', async (e)=>{
             e.preventDefault();
-            statusEl.textContent = 'Thanks! We will be in touch within 24 hours.';
-            form.reset();
+
+            const formData = new FormData(form);
+
+            statusEl.textContent = "Sending...";
+            statusEl.classList.add("visible");
+
+            try {
+                const response = await fetch("send.php", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    statusEl.textContent = "Thanks! We will be in touch within 24 hours.";
+                    form.reset();
+                } else {
+                    statusEl.textContent = "Something went wrong. Please try again.";
+                }
+            } catch (err) {
+                statusEl.textContent = "Error. Please try again later.";
+                console.error(err);
+            }
         });
     }
 })();
+
 
 // Snake: expand on title/text/ellipsis; collapse on any click inside the box (except buttons)
 (function(){

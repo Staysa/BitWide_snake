@@ -505,9 +505,9 @@ body{
 .section--testimonials{
     position:relative;padding:72px 0 56px;
     background:
-            url("../assets/img/bg_testimonials.png"),
-            #111;
+            url("../assets/img/bg_testimonials.png"), #111;
     background-repeat: no-repeat;
+    background-size: contain;
     color:#fff;
 }
 .section--testimonials .inv{color:#fff}
@@ -1053,6 +1053,9 @@ body{
 }
 
 @media (max-width: 960px) and (max-width: 1199px) {
+    .channels .h2 {
+        margin: 0 auto 48px;
+    }
     .price__grid {
         grid-template-columns: 1fr;
     }

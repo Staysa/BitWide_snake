@@ -94,48 +94,97 @@
 
 
 // Snake: expand on title/text/ellipsis; collapse on any click inside the box (except buttons)
-(function(){
-    const root = document.getElementById('snakeSteps');
-    if(!root) return;
+(function () {
+    var root = document.getElementById('snakeSteps');
+    if (!root) return;
 
-    function expand(descEl, boxEl){
-        const inner = descEl.querySelector('.snake-desc__inner');
-        if(!inner) return;
+    var raf = window.requestAnimationFrame || function (cb) { return setTimeout(cb, 16); };
+    var caf = window.cancelAnimationFrame || clearTimeout;
+
+    function findAncestorWithClass(node, className, stopNode) {
+        while (node && node !== stopNode) {
+            if (node.nodeType === 1 && node.classList && node.classList.contains(className)) {
+                return node;
+            }
+            node = node.parentNode;
+        }
+        return null;
+    }
+
+    function expand(descEl, boxEl) {
+        var inner = descEl.querySelector('.snake-desc__inner');
+        if (!inner) return;
+
         boxEl.classList.add('is-open');
         descEl.style.maxHeight = '50px';
-        requestAnimationFrame(()=>{ descEl.style.maxHeight = (inner.scrollHeight + 2) + 'px'; });
+
+        raf(function () {
+            descEl.style.maxHeight = (inner.scrollHeight + 2) + 'px';
+        });
     }
-    function collapse(descEl, boxEl){
-        const h = descEl.scrollHeight;
+
+    function collapse(descEl, boxEl) {
+        var h = descEl.scrollHeight;
         descEl.style.maxHeight = h + 'px';
-        requestAnimationFrame(()=>{ descEl.style.maxHeight = '50px'; });
-        const done = ()=> boxEl.classList.remove('is-open');
-        descEl.addEventListener('transitionend', done, {once:true});
+
+        raf(function () {
+            descEl.style.maxHeight = '50px';
+        });
+
+        var done = function () {
+            boxEl.classList.remove('is-open');
+        };
+
+        descEl.addEventListener('transitionend', done, { once: true });
         setTimeout(done, 400);
     }
 
-    root.addEventListener('click', (e)=>{
-        if (e.target.closest('.btn-mini')) return;            // ignore step buttons
-        const box = e.target.closest('.snake-box'); if(!box) return;
-        const desc = box.querySelector('.snake-desc');
-        const isOpen = box.classList.contains('is-open');
+    root.addEventListener('click', function (e) {
+        var target = e.target;
 
-        if (isOpen){                                          // collapse anywhere inside the box
+        // ignore clicks on step buttons
+        if (findAncestorWithClass(target, 'btn-mini', root)) {
+            return;
+        }
+
+        var box = findAncestorWithClass(target, 'snake-box', root);
+        if (!box) return;
+
+        var desc = box.querySelector('.snake-desc');
+        if (!desc) return;
+
+        var isOpen = box.classList.contains('is-open');
+
+        if (isOpen) {
+            // collapse on any click inside box (except buttons above)
             collapse(desc, box);
             return;
         }
-        const canExpand = e.target.closest('.snake-toggle, .snake-desc, .snake-ellipsis');
-        if (canExpand) expand(desc, box);
-    });
 
-    let rAF;
-    window.addEventListener('resize', ()=>{
-        cancelAnimationFrame(rAF);
-        rAF=requestAnimationFrame(()=>{
-            root.querySelectorAll('.snake-box.is-open .snake-desc').forEach(desc=>{
-                const inner = desc.querySelector('.snake-desc__inner');
-                if(inner) desc.style.maxHeight = (inner.scrollHeight + 2) + 'px';
-            });
+        // allow expand only when clicking title, text or ellipsis
+        var inToggleArea =
+            findAncestorWithClass(target, 'snake-toggle', box) ||
+            findAncestorWithClass(target, 'snake-desc', box) ||
+            findAncestorWithClass(target, 'snake-ellipsis', box);
+
+        if (inToggleArea) {
+            expand(desc, box);
+        }
+    }, false);
+
+    var pending;
+    window.addEventListener('resize', function () {
+        if (pending) caf(pending);
+
+        pending = raf(function () {
+            var openDescs = root.querySelectorAll('.snake-box.is-open .snake-desc');
+            for (var i = 0; i < openDescs.length; i++) {
+                var desc = openDescs[i];
+                var inner = desc.querySelector('.snake-desc__inner');
+                if (inner) {
+                    desc.style.maxHeight = (inner.scrollHeight + 2) + 'px';
+                }
+            }
         });
     });
 })();

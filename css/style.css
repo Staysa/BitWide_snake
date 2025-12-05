@@ -315,6 +315,18 @@ body{
     position: relative;
     padding-top: 220px;
 }
+.steps {
+    display: -webkit-box;
+    display: -ms-grid;
+    display: grid;
+    gap: 18px;
+}
+
+@supports not (display: grid) {
+    .step {
+        margin-bottom: 18px;
+    }
+}
 .step{
     display:block;
     /*grid-template-columns:32px 1fr;gap:12px;align-items:start;*/

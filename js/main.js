@@ -98,31 +98,30 @@
     const root = document.getElementById('snakeSteps');
     if (!root) return;
 
-    function onClick(e) {
-        const target = e.target;
+    // clean any inline max-height left from previous versions
+    root.querySelectorAll('.snake-desc').forEach(function (el) {
+        el.style.maxHeight = '';
+    });
 
-        if (target.closest('.btn-mini')) return;
+    const TOGGLE_TARGET = '.snake-toggle, .snake-desc, .snake-ellipsis';
 
-        const box = target.closest('.snake-box');
+    root.addEventListener('click', function (e) {
+        if (e.target.closest('.btn-mini')) return;
+
+        const box = e.target.closest('.snake-box');
         if (!box) return;
 
-        const desc = box.querySelector('.snake-desc');
-        if (!desc) return;
+        if (!e.target.closest(TOGGLE_TARGET)) return;
 
         const isOpen = box.classList.contains('is-open');
+        const willOpen = !isOpen;
 
-        if (isOpen) {
-            box.classList.remove('is-open');
-            desc.style.maxHeight = "";   // clear inline if it was set before
-            return;
-        }
+        root.querySelectorAll('.snake-box.is-open').forEach(function (other) {
+            if (other !== box) {
+                other.classList.remove('is-open');
+            }
+        });
 
-        const canExpand = target.closest('.snake-toggle, .snake-desc, .snake-ellipsis');
-        if (!canExpand) return;
-
-        box.classList.add('is-open');
-        desc.style.maxHeight = "";       // rely on CSS .snake-box.is-open .snake-desc
-    }
-
-    root.addEventListener('click', onClick);
+        box.classList.toggle('is-open', willOpen);
+    });
 })();

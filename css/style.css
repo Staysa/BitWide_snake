@@ -382,42 +382,40 @@ body{
 .step:nth-child(1){
     max-width: 497px;
     right: -440px;
-    z-index: 10;
 }
 .step:nth-child(2){
     top: -44px;
-    z-index: 9;
 }
 .step:nth-child(3){
     right: -420px;
     top: 24px;
-    z-index: 8;
+    /*z-index: 8;*/
 }
 .step:nth-child(4){
     max-width: 635px;
     left: 290px;
     top: 38px;
-    z-index: 7;
+    /*z-index: 7;*/
 }
 .step:nth-child(5){
     right: -540px;
     top: 100px;
-    z-index: 6;
+    /*z-index: 6;*/
 }
 .step:nth-child(6){
     max-width: 364px;
     left: -8px;
     top: -46px;
-    z-index: 5;
+    /*z-index: 5;*/
 }
 .step:nth-child(7){
     left: 440px;
-    z-index: 4;
+    /*z-index: 4;*/
 }
 .step:nth-child(8){
     left: 360px;
     top: 40px;
-    z-index: 3;
+    /*z-index: 3;*/
 }
 .step:nth-child(9) .snake-ellipsis,
 .step:nth-child(10) .snake-ellipsis {
@@ -427,13 +425,13 @@ body{
 .step:nth-child(9){
     left: 270px;
     top: 44px;
-    z-index: 2;
+    /*z-index: 2;*/
 }
 .step:nth-child(10){
     max-width: 466px;
     left: 550px;
     top: 32px;
-    z-index: 1;
+    /*z-index: 1;*/
 }
 
 @media (max-width:1200px) {
@@ -474,6 +472,9 @@ body{
     .step.right,
     .right.right .snake-toggle {
         text-align: left;
+    }
+    .snake-desc {
+        position: unset !important;
     }
     .badge {
         display: inline-block !important;

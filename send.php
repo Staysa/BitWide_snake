@@ -3,7 +3,7 @@
 header('Content-Type: application/json; charset=utf-8');
 
 // 1. Set recipient
-$to = "adv.staysa@gmail.com"; // <-- your email
+$to = "shawn@bitwide.com"; // <-- your email
 $subject = "New lead: BitWide landing Snake";
 
 // 2. Collect fields safely

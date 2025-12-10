@@ -90,6 +90,10 @@ body{
 .btn--ghost.btn-mini{background:transparent;color:var(--primary);border-color:rgba(227,30,36,.35);box-shadow:0 4px 14px rgba(0,0,0,.06)}
 .btn--ghost.btn-mini:hover{border-color:var(--primary);background:rgba(227,30,36,.06)}
 .btn--primary.btn-mini{background:var(--primary);color:#fff;box-shadow:0 6px 18px rgba(227,30,36,.25)}
+a.btn-mini, a.btn {
+    display: inline-block;
+    text-decoration: none;
+}
 
 /* Header */
 .header{position:sticky;top:0;background:#111;z-index:500;border-bottom:1px solid #11111110}
@@ -417,11 +421,11 @@ body{
     top: 40px;
     /*z-index: 3;*/
 }
-.step:nth-child(9) .snake-ellipsis,
+/*.step:nth-child(9) .snake-ellipsis,
 .step:nth-child(10) .snake-ellipsis {
     right: auto;
     left: 8px;
-}
+}*/
 .step:nth-child(9){
     left: 270px;
     top: 44px;
@@ -466,9 +470,9 @@ body{
         width: 100%;
         display: inline-block;
     }
-    .snake-ellipsis {
+    /*.snake-ellipsis {
         display: none;
-    }
+    }*/
     .step.right,
     .right.right .snake-toggle {
         text-align: left;
@@ -520,7 +524,7 @@ body{
     -webkit-box-orient: vertical;
 }
 
-.snake-ellipsis {
+/*.snake-ellipsis {
     position: absolute;
     right: 8px;
     bottom: -8px;
@@ -531,13 +535,13 @@ body{
     border: 0;
     color: var(--text);
     cursor: pointer;
-}
+}*/
 
 .snake-actions {
     margin-top: 10px;
 }
 
-.snake-box:not(.is-open) .snake-desc {
+.snake-box .snake-desc {
     cursor: pointer;
 }
 
@@ -558,10 +562,13 @@ body{
     -webkit-box-orient: unset;
 }
 
-.snake-box.is-open .snake-ellipsis {
+/*.snake-box.is-open .snake-ellipsis {
     display: none;
-}
+}*/
 
+.snake-desc__inner {
+    padding-right: 20px;
+}
 .snake-desc__inner p {
     font-size: 1.2em;
     margin: 0;

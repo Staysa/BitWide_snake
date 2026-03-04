@@ -1,13 +1,14 @@
-//is US
-(function () {
+// Geo-based content switching via server-side country detection.
+// Defaults to CA version when country is null or fetch fails.
+(async function () {
   'use strict';
 
-  function getUserCountry() {
+  async function getUserCountry() {
     try {
-      const locale = Intl.DateTimeFormat().resolvedOptions().locale;
-      // en-US → US
-      const match = locale.match(/-(\w{2})$/);
-      return match ? match[1].toUpperCase() : null;
+      var res = await fetch('country.php', { cache: 'no-store' });
+      if (!res.ok) return null;
+      var data = await res.json();
+      return (data.country ? String(data.country).toUpperCase() : null);
     } catch (e) {
       return null;
     }
@@ -30,7 +31,7 @@
       }
     });
   }
-  
+
   function replaceImageForUS() {
     const img = document.querySelector('[data-market-image]');
     if (!img) return;
@@ -46,7 +47,7 @@
     });
   }
 
-  var country = getUserCountry();
+  var country = await getUserCountry();
 
   if (country === "US") {
     replaceContent(COPY_US);

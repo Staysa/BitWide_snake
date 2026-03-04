@@ -1,3 +1,73 @@
+//is US
+(function () {
+  'use strict';
+
+  function getUserCountry() {
+    try {
+      const locale = Intl.DateTimeFormat().resolvedOptions().locale;
+      // en-US → US
+      const match = locale.match(/-(\w{2})$/);
+      return match ? match[1].toUpperCase() : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  const COPY_US = {
+    //country: "United States",
+    region: "the United States",
+    team_reach: "Dedicated team. Nationwide reach",
+    origin: "US-Based",
+    market: "US Market",
+    currency: "USD"
+  };
+
+  function replaceContent(copy) {
+    Object.keys(copy).forEach(function (key) {
+      var el = document.querySelector('[data-i18n-key="' + key + '"]');
+      if (el) {
+        el.textContent = copy[key];
+      }
+    });
+  }
+  
+  function replaceImageForUS() {
+    const img = document.querySelector('[data-market-image]');
+    if (!img) return;
+
+    img.src = 'assets/img/ChatGPT Image Jan 21, 2026, 03_41_37 PM 1.jpg';
+    img.alt = 'US market';
+  }
+
+  function removeElementsForUS() {
+    const elements = document.querySelectorAll('[data-remove-for-us]');
+    elements.forEach(function (el) {
+      el.remove();
+    });
+  }
+
+  var country = getUserCountry();
+
+  if (country === "US") {
+    replaceContent(COPY_US);
+    replaceImageForUS();
+    removeElementsForUS();
+  }
+})();
+
+(function () {
+  'use strict';
+
+  var currencyNodes = document.querySelectorAll('[data-i18n-key="currency"]');
+
+  if (!currencyNodes.length) return;
+
+  currencyNodes.forEach(function (node) {
+    node.textContent = 'USD';
+  });
+})();
+
+
 // Mobile header nav for: .header / #burger / #navMobile
 (function(){
     const header    = document.querySelector('.header');

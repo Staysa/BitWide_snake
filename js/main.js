@@ -56,18 +56,6 @@
   }
 })();
 
-(function () {
-  'use strict';
-
-  var currencyNodes = document.querySelectorAll('[data-i18n-key="currency"]');
-
-  if (!currencyNodes.length) return;
-
-  currencyNodes.forEach(function (node) {
-    node.textContent = 'USD';
-  });
-})();
-
 
 // Mobile header nav for: .header / #burger / #navMobile
 (function(){
